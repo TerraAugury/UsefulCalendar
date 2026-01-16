@@ -14,14 +14,10 @@ The app must work well on both mobile and desktop and persist data locally (no b
 - Code MUST be broken into multiple files/modules for maintainability (no giant single-file app).
 
 ## 3) Navigation / Tabs (Mobile Bottom Menu)
-- Persistent bottom navigation with 4 tabs:
-  1) Appointments
-  2) Calendar
-  3) Categories
-  4) Settings
+- Persistent bottom navigation
 - Each tab is a <section> screen; only one visible at a time.
 - Tab switching must not unexpectedly clear user input.
-- Recommended: sync active tab with URL hash (#appointments, #calendar, etc.).
+- Recommended: sync active tab with URL hash.
 - On wider screens (>= 900px), nav may remain bottom or adapt to top/side via CSS.
 
 ## 4) Category Colors (iOS-consistent palette)
@@ -55,7 +51,7 @@ Appointments:
 - Create / Edit / Delete appointments.
 - Fields:
   - title (required)
-  - date (required, YYYY-MM-DD)
+  - date (required, DD-MM-YYYY)
   - startTime (required, HH:MM)
   - endTime (optional)
   - categoryId (required)
@@ -128,33 +124,13 @@ Appointments reference category by categoryId:
   updatedAt: 1700000000000
 }
 
-7) Persistence / Storage Keys (Versioned)
-
-Use versioned keys:
-
-app_appointments_v2
-
-app_categories_v2
-
-app_preferences_v1 (optional: activeTab, default sort, etc.)
-
-Migration
-
-If v1 keys exist (string categories / appointment.category string), migrate to v2:
-
-Build category objects from old strings, assign colors deterministically from palette
-(e.g., hash name -> palette index) so results are stable.
-
-Convert appointment.category -> appointment.categoryId via name lookup.
-
-Never silently delete user data during migration. If migration fails, keep old data and show an error.
+7) #deleted
 
 8) Required Code Organization (Maintainability First)
 
 MANDATORY structure (create these files; keep responsibilities focused):
-
-/app
 index.html
+/app
 styles.css
 main.js # bootstrap, init, render loop wiring
 state.js # state + state update helpers (single source of truth)
@@ -203,7 +179,6 @@ color must be one of allowed IDs
 Export JSON format (example):
 
 {
-  version: 2,
   exportedAt: 1700000000000,
   categories: [...],
   appointments: [...]
@@ -220,38 +195,4 @@ On success: replace current storage + state + rerender
 
 On failure: show error and keep current data
 
-11) Testing Checklist (Manual)
-
-CRUD persists after refresh
-
-Category colors show correctly on appointment cards
-
-Filters + sorts combine correctly
-
-Bottom nav works on mobile; desktop responsive ok
-
-Keyboard navigation + labels ok
-
-Import/export round-trip works
-
-Migration: if v1 data exists, it migrates without loss
-
-12) Work Plan (Execution Order)
-
-Scaffold UI: bottom tabs + screens + basic styling + CSS color variables
-
-Implement router.js tab switching + (optional) hash sync
-
-Implement state.js + storage.js (load/save + default categories + migration)
-
-Implement Appointments CRUD + colored cards (stripe + tint)
-
-Implement filters + sorting
-
-Implement Categories screen (add category with color selection)
-
-Implement Calendar agenda grouped by date
-
-Implement Settings export/import/reset
-
-Polish accessibility + responsiveness + error states
++ error states
