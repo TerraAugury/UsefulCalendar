@@ -1,0 +1,106 @@
+export const sampleData = {
+  version: 2,
+  exportedAt: 1768580000000,
+  appointments: [
+    {
+      id: "b2b3f0a1-1f3a-4a42-8f0e-9b4e5f8f1c01",
+      title: "Dentist checkup",
+      date: "2026-01-20",
+      startTime: "09:30",
+      endTime: "10:15",
+      categoryId: "doctors",
+      location: "City Clinic",
+      notes: "Bring insurance card.",
+      status: "planned",
+      createdAt: 1768500000000,
+      updatedAt: 1768500000000
+    },
+    {
+      id: "9f0d5c1b-2f37-4e62-b1a1-7e7c9c2a7b11",
+      title: "Weekly team sync",
+      date: "2026-01-21",
+      startTime: "10:00",
+      endTime: "10:45",
+      categoryId: "work",
+      location: "Meeting room B",
+      notes: "Share sprint updates.",
+      status: "planned",
+      createdAt: 1768500500000,
+      updatedAt: 1768500500000
+    },
+    {
+      id: "6f6bdb03-5f2b-4202-9a1b-427e9123a443",
+      title: "Groceries and pantry",
+      date: "2026-01-21",
+      startTime: "18:00",
+      endTime: "19:00",
+      categoryId: "house",
+      location: "Market hall",
+      notes: "Pick up vegetables and coffee.",
+      status: "done",
+      createdAt: 1768502000000,
+      updatedAt: 1768520000000
+    },
+    {
+      id: "a0371c65-2d2f-4a3e-8e2d-4d4dbfe2201d",
+      title: "Budget review",
+      date: "2026-01-22",
+      startTime: "08:00",
+      endTime: "08:45",
+      categoryId: "finance",
+      location: "Home office",
+      notes: "Update savings targets.",
+      status: "planned",
+      createdAt: 1768504000000,
+      updatedAt: 1768504000000
+    },
+    {
+      id: "ee4ad6c9-0b2f-49b2-96ab-21463e88d4b5",
+      title: "Lunch with Alex",
+      date: "2026-01-22",
+      startTime: "12:30",
+      endTime: "13:30",
+      categoryId: "friends",
+      location: "Cafe Nord",
+      notes: "Discuss weekend trip.",
+      status: "planned",
+      createdAt: 1768505000000,
+      updatedAt: 1768505000000
+    },
+    {
+      id: "3e4b2c8f-89d7-4e50-9f5f-7cc9d4a6dca9",
+      title: "Contractor visit",
+      date: "2026-01-23",
+      startTime: "14:00",
+      endTime: "15:30",
+      categoryId: "house",
+      location: "Apartment",
+      notes: "Review repair plan.",
+      status: "cancelled",
+      createdAt: 1768507000000,
+      updatedAt: 1768510000000
+    }
+  ],
+  categories: [
+    { id: "general", name: "General", color: "blue" },
+    { id: "doctors", name: "Doctors", color: "red" },
+    { id: "house", name: "House", color: "orange" },
+    { id: "friends", name: "Friends", color: "green" },
+    { id: "work", name: "Work", color: "indigo" },
+    { id: "finance", name: "Finance", color: "yellow" }
+  ],
+  preferences: {
+    activeTab: "appointments",
+    appointmentFilters: {
+      search: "",
+      categoryId: "",
+      from: "",
+      to: "",
+      sort: "dateAsc"
+    },
+    calendarRange: {
+      from: "",
+      to: ""
+    }
+  }
+};

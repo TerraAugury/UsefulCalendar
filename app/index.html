@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <title>Appointment Notebook</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <p class="brand-title">Appointment Notebook</p>
+            <p class="brand-sub">
+              Keep your day organized and calm.
+            </p>
+          </div>
+        </div>
+        <button class="primary" id="new-appointment-btn" type="button">
+          Add
+        </button>
+      </header>
+
+      <main class="app-main">
+        <section
+          id="appointments"
+          class="screen"
+          data-tab="appointments"
+        >
+          <header class="screen-header">
+            <h1>Appointments</h1>
+            <p class="screen-subtitle">
+              Plan, track, and finish your sessions.
+            </p>
+          </header>
+
+          <div class="filters" id="appointments-filters">
+            <div class="field">
+              <label for="filter-search">Search</label>
+              <input
+                id="filter-search"
+                type="search"
+                placeholder="Title, location, notes"
+              />
+            </div>
+            <div class="field">
+              <label for="filter-category">Category</label>
+              <select id="filter-category"></select>
+            </div>
+            <div class="field">
+              <label for="filter-from">From</label>
+              <input id="filter-from" type="date" />
+            </div>
+            <div class="field">
+              <label for="filter-to">To</label>
+              <input id="filter-to" type="date" />
+            </div>
+            <div class="field">
+              <label for="filter-sort">Sort</label>
+              <select id="filter-sort">
+                <option value="dateAsc">Date/time (earliest)</option>
+                <option value="dateDesc">Date/time (latest)</option>
+                <option value="category">Category</option>
+                <option value="createdAt">Created date</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="list" id="appointments-list"></div>
+          <div class="empty-state" id="appointments-empty" hidden>
+            <p>No appointments yet. Add your first appointment.</p>
+          </div>
+        </section>
+
+        <section
+          id="calendar"
+          class="screen"
+          data-tab="calendar"
+          hidden
+        >
+          <header class="screen-header">
+            <h1>Calendar</h1>
+            <p class="screen-subtitle">
+              Agenda view grouped by date.
+            </p>
+          </header>
+
+          <div class="filters" id="calendar-filters">
+            <div class="field">
+              <label for="calendar-from">From</label>
+              <input id="calendar-from" type="date" />
+            </div>
+            <div class="field">
+              <label for="calendar-to">To</label>
+              <input id="calendar-to" type="date" />
+            </div>
+          </div>
+
+          <div class="agenda" id="calendar-agenda"></div>
+          <div class="empty-state" id="calendar-empty" hidden>
+            <p>No appointments in this range.</p>
+          </div>
+        </section>
+
+        <section
+          id="categories"
+          class="screen"
+          data-tab="categories"
+          hidden
+        >
+          <header class="screen-header">
+            <h1>Categories</h1>
+            <p class="screen-subtitle">
+              Keep your labels tidy and easy to scan.
+            </p>
+          </header>
+
+          <form id="category-form" class="inline-form">
+            <div class="field">
+              <label for="category-name">Name</label>
+              <input
+                id="category-name"
+                type="text"
+                placeholder="e.g. Finance"
+              />
+            </div>
+            <div class="field">
+              <label for="category-color">Color</label>
+              <div class="color-select">
+                <span
+                  class="color-dot"
+                  id="category-color-dot"
+                  aria-hidden="true"
+                ></span>
+                <select id="category-color" required></select>
+              </div>
+            </div>
+            <button type="submit" class="primary">Add category</button>
+          </form>
+
+          <div class="list" id="categories-list"></div>
+        </section>
+
+        <section
+          id="settings"
+          class="screen"
+          data-tab="settings"
+          hidden
+        >
+          <header class="screen-header">
+            <h1>Settings</h1>
+            <p class="screen-subtitle">
+              Export, import, or reset your data.
+            </p>
+          </header>
+
+          <div class="settings-group">
+            <h2>Backup</h2>
+            <button id="export-btn" class="primary" type="button">
+              Export JSON
+            </button>
+            <button id="load-sample-btn" class="ghost" type="button">
+              Load sample data
+            </button>
+            <div class="field">
+              <label for="import-file">Import JSON</label>
+              <input
+                id="import-file"
+                type="file"
+                accept="application/json"
+              />
+            </div>
+            <p class="help-text" id="import-status" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="settings-group danger-zone">
+            <h2>Reset</h2>
+            <button id="reset-btn" class="danger" type="button">
+              Clear all data
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Main">
+        <button class="nav-btn" type="button" data-tab-target="appointments">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            />
+            <path
+              d="M8 9h8M8 13h6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Appointments</span>
+        </button>
+        <button class="nav-btn" type="button" data-tab-target="calendar">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            />
+            <path
+              d="M8 2v4M16 2v4M4 9h16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Calendar</span>
+        </button>
+        <button class="nav-btn" type="button" data-tab-target="categories">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M5 7h14M5 12h14M5 17h10"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Categories</span>
+        </button>
+        <button class="nav-btn" type="button" data-tab-target="settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M12 7a5 5 0 1 1 0 10a5 5 0 0 1 0-10Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            />
+            <path
+              d="M4 12h2M18 12h2M12 4v2M12 18v2M6.2 6.2l1.4 1.4M16.4 16.4l1.4 1.4M17.8 6.2l-1.4 1.4M7.6 16.4l-1.4 1.4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+    </div>
+
+    <div
+      class="modal"
+      id="appointment-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="appointment-modal-title"
+      hidden
+    >
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <header class="modal-header">
+          <h2 id="appointment-modal-title">New appointment</h2>
+          <button
+            class="ghost"
+            type="button"
+            id="close-appointment-modal"
+            aria-label="Close appointment form"
+          >
+            Close
+          </button>
+        </header>
+
+        <form id="appointment-form">
+          <input type="hidden" id="appointment-id" />
+          <div class="form-grid">
+            <div class="field">
+              <label for="appointment-title">Title</label>
+              <input id="appointment-title" type="text" required />
+            </div>
+            <div class="field">
+              <label for="appointment-date">Date</label>
+              <input id="appointment-date" type="date" required />
+            </div>
+            <div class="field">
+              <label for="appointment-start">Start time</label>
+              <input id="appointment-start" type="time" required />
+            </div>
+            <div class="field">
+              <label for="appointment-end">End time</label>
+              <input id="appointment-end" type="time" />
+            </div>
+            <div class="field">
+              <label for="appointment-category">Category</label>
+              <select id="appointment-category" required></select>
+            </div>
+            <div class="field">
+              <label for="appointment-status">Status</label>
+              <select id="appointment-status" required>
+                <option value="planned">Planned</option>
+                <option value="done">Done</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="appointment-location">Location</label>
+              <input id="appointment-location" type="text" />
+            </div>
+            <div class="field">
+              <label for="appointment-notes">Notes</label>
+              <textarea id="appointment-notes" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="form-errors" id="appointment-errors" aria-live="polite"></div>
+          <div class="modal-actions">
+            <button class="ghost" type="button" id="cancel-appointment-btn">
+              Cancel
+            </button>
+            <button class="danger" type="button" id="delete-appointment-btn">
+              Delete
+            </button>
+            <button class="primary" type="submit" id="save-appointment-btn">
+              Save appointment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
